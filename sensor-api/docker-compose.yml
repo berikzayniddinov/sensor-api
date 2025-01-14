@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    container_name: sensor_api
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/sensor_db
+      SPRING_DATASOURCE_USERNAME: sensor_user
+      SPRING_DATASOURCE_PASSWORD: sensor_password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    container_name: sensor_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: sensor_user
+      POSTGRES_PASSWORD: sensor_password
+      POSTGRES_DB: sensor_db
